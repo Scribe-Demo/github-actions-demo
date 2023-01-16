@@ -38,6 +38,9 @@ jobs:
            scribe-client-id: ${{ secrets.clientid }}
            scribe-client-secret: ${{ secrets.clientsecret }}
            product-key: ${{ secrets.productkey }}
+           scribe-url: "https://api.dev.hub.scribesecurity.com/scribe-proxy"
+           scribe-login-url: "https://scribesec-dev.us.auth0.com"
+           scribe-audience:  "api.dev.scribesecurity.com"
 
       # Build and push your image - this example skips this step as we're using the published mongo express.
 
