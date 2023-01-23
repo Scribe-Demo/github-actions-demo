@@ -2,35 +2,97 @@
 
 name: stg_build
 
-# Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: 
+    push:
+    workflow_dispatch:
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+env:
+     SCRIBE_URL: "https://api.dev.hub.scribesecurity.com/scribe-proxy"
+     SCRIBE_LOGIN_URL: "https://scribesec-dev.us.auth0.com"
+     SCRIBE_AUDIENCE: "api.dev.scribesecurity.com"
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  
+  scribe-report-test:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: create file and Docker
+        run: | 
+          echo `date` > tmp.txt
+          echo "FROM scratch" > Dockerfile
+          echo "COPY . ." >> Dockerfile
+          docker build -t date:latest .
+ 
       - uses: actions/checkout@v3
+      
+      - name: install opa
+        run: | 
+          curl -L -o opa https://openpolicyagent.org/downloads/v0.46.1/opa_linux_amd64_static
+          chmod +x ./opa
+          echo "installed"
+          whereis opa
+          ./opa version
+      
+      
+      - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
+        uses: GuillaumeFalourd/clone-github-repo-action@v2
+        with:
+            owner: 'scribe-security'
+            repository: 'GitHub-Posture'
+            access-token: ${{ secrets.GH_ACCESS_TOKEN }}
+      
+            
+      - name: Generate cyclonedx json SBOM
+        id: gensbom_json
+        uses: scribe-security/actions/gensbom/bom@master
+        with:
+          type: docker            
+          target: mongo-express:0.34
+          format: json
+          verbose: 2
+          force: true
+          scribe-enable: true
+#           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
+#           product-key: sdfsdfsdfsdfsdf 
+          scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
+          scribe-client-secret: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_SECRET }}
+          scribe-url: "https://api.dev.hub.scribesecurity.com/scribe-proxy"
+          scribe-login-url: "https://scribesec-dev.us.auth0.com"
+          scribe-audience: "api.dev.scribesecurity.com"
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - name: Generate slsa prov statement
+        id: gensbom_slsa
+        uses: scribe-security/actions/gensbom/bom@master
+        with:
+          type: docker
+          target: mongo-express:0.34
+          format: statement-slsa
+#           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
+#           product-key: sdfsdfsdfsdfsdf 
+          verbose: 2
+          force: true
+          
+      - name: generate slsa report
+        run: | # echo "SLSA is great" > slsa.json
+          cat input.json | sed "s/GH_TOKEN/${{ secrets.GH_ACCESS_TOKEN }}/" | ./opa eval -I --format=pretty -b GitHub-Posture/github data.github.slsa.report > slsa.json
+          cat slsa.json
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: provenance
+          path: ${{ steps.gensbom_slsa.outputs.OUTPUT_PATH }}
+          
+      - uses: actions/upload-artifact@v2
+        with:
+          name: slsa_report
+          path: slsa.json 
+          
+      - name: Cache input.json
+        uses: actions/cache@v3
+        with:
+         path: ~/cache.txt
+         key: my-key
+          
+ 
+       
