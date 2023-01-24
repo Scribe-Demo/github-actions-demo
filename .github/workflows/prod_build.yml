@@ -54,9 +54,9 @@ jobs:
           scribe-enable: true
 #           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
 #           product-key: github action 
-          scribe-client-id: ${{ secrets.SCRIBE_POD_M2M_CLIENT_ID }}
+          scribe-client-id: ${{ secrets.SCRIBE_PROD_M2M_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_M2M_CLIENT_SECRET }}
-          scribe-url: "https://api.dev.hub.scribesecurity.com/scribe-proxy"
+#           scribe-url: "https://api.dev.hub.scribesecurity.com/scribe-proxy"
 #           scribe-login-url: "https://scribesec-dev.us.auth0.com"
 #           scribe-audience: "api.dev.scribesecurity.com"
 
