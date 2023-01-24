@@ -69,7 +69,6 @@ jobs:
           target: mongo-express:0.34
           format: statement-slsa
 #           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
-          product-key: github action 
           verbose: 2
           force: true
           
