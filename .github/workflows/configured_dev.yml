@@ -53,7 +53,7 @@ jobs:
           force: true
           scribe-enable: true
 #           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
-#           product-key: github action1 
+          product-key: cada82cf-0951-40bc-8713-35fda15d4692
           scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_SECRET }}
           scribe-url: "https://api.dev.hub.scribesecurity.com/scribe-proxy"
@@ -68,8 +68,8 @@ jobs:
           type: docker
           target: eclipse/angular:latest
           format: statement-slsa
-#           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
-          product-key: github action 
+          product-key: cada82cf-0951-40bc-8713-35fda15d4692
+#           product-key: github action 
           verbose: 2
           force: true
           
