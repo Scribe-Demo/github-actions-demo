@@ -47,7 +47,7 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker            
-          target: traefik:windowsservercore-1809
+          target: eclipse/angular:latest
           format: json
           verbose: 2
           force: true
@@ -67,7 +67,7 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker
-          target: etraefik:windowsservercore-1809
+          target: eclipse/angular:latest
           format: statement-slsa
 #           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
 #           product-key: sdfsdfsdfsdfsdf 
