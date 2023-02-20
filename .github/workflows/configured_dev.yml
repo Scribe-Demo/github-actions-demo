@@ -47,7 +47,7 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker            
-          target: eclipse/angular:latest
+          target: requarks/wiki:2.5.219
           format: json
           verbose: 2
           force: true
@@ -66,7 +66,7 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker
-          target: eclipse/angular:latest
+          target: requarks/wiki:2.5.219
           format: statement-slsa
           product-key: cada82cf-0951-40bc-8713-35fda15d4692
 #           product-key: github action 
