@@ -47,13 +47,16 @@ jobs:
           scribe-login-url: "https://scribesec-dev.us.auth0.com"
           scribe-audience: "api.dev.scribesecurity.com"
 
+      - name: build image
+        run: |
+          docker build -t my-image:latest .
           
       - name: Image generate bom, upload to scribe
         id: valint_bom_image
         uses: scribe-security/action-bom@master
         with:
           type: image
-          target: JUST_GENERATED_IMAGE
+          target: my-image:latest
           verbose: 2
           scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
