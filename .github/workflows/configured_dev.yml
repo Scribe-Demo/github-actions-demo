@@ -54,10 +54,10 @@ jobs:
           scribe-enable: true
 #           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
 #           product-key: sdfsdfsdfsdfsdf 
-#           scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
-#           scribe-client-secret: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_SECRET }}
-          scribe-client-id: KPW7yHFizbDhIXlHA28hhUfaoliiPn9u
-          scribe-client-secret: 36QnyovoREMnsNKJD9mEPJ9lfet44rM0NF18dPipSkfBCe09zP7aig8AtB80dIPK
+          scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
+          scribe-client-secret: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_SECRET }}
+#           scribe-client-id: KPW7yHFizbDhIXlHA28hhUfaoliiPn9u
+#           scribe-client-secret: 36QnyovoREMnsNKJD9mEPJ9lfet44rM0NF18dPipSkfBCe09zP7aig8AtB80dIPK
           scribe-url: "https://api.dev.hub.scribesecurity.com/scribe-proxy"
           scribe-login-url: "https://scribesec-dev.us.auth0.com"
           scribe-audience: "api.dev.scribesecurity.com"
