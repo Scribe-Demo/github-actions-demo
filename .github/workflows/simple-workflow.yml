@@ -38,7 +38,7 @@ jobs:
         uses: scribe-security/action-bom@master
         with:
           type: dir
-          target: 'github_upload_build'
+          target: ./
           verbose: 2
           scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
@@ -52,8 +52,8 @@ jobs:
         id: valint_bom_image
         uses: scribe-security/action-bom@master
         with:
-          type: docker # To be included only if you want to to use docker daemon to access the image (for example, creating your docker image locally)
-          target: 'github_upload_build'
+          type: image
+          target: JUST_GENERATED_IMAGE
           verbose: 2
           scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
