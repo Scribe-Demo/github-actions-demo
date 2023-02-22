@@ -55,7 +55,7 @@ jobs:
         id: valint_bom_image
         uses: scribe-security/action-bom@master
         with:
-          type: image
+          type: docker
           target: my-image:latest
           verbose: 2
           scribe-enable: true
