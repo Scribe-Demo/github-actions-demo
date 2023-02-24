@@ -67,7 +67,7 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker
-          target: mmysql:latest
+          target: mysql:latest
           format: statement-slsa
 #           product-key: ${{ secrets.SCRIBE_STG_PRODUCT_KEY }}
 #           product-key: sdfsdfsdfsdfsdf 
