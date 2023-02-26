@@ -47,7 +47,7 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker            
-          target: ranchercharts/unguiculus-mongodb-install:0.7
+          target: mongo-express:latest
           format: json
           verbose: 2
           force: true
@@ -67,7 +67,7 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker
-          target: ranchercharts/unguiculus-mongodb-install:0.7
+          target: mongo-express:latest
           format: statement-slsa
 #           product-key: ${{ secrets.SCRIBE_STG_PRODUCT_KEY }}
 #           product-key: sdfsdfsdfsdfsdf 
