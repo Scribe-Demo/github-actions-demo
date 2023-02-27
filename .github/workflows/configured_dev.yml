@@ -3,7 +3,6 @@
 name: dev_build
 
 on: 
-    push:
     workflow_dispatch:
 
 env:
@@ -47,13 +46,13 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker            
-          target: consul:latest
-          format: json
+          target: nodered/node-red-dev:3.0.0-beta.4-14
+#           format: json
+          format: attest
           verbose: 2
           force: true
           scribe-enable: true
 #           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
-#           product-key: sdfsdfsdfsdfsdf 
           scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_SECRET }}
 #           scribe-client-id: KPW7yHFizbDhIXlHA28hhUfaoliiPn9u
@@ -69,7 +68,7 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker
-          target: consul:latest
+          target: nodered/node-red-dev:3.0.0-beta.4-14
           format: statement-slsa
 #           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
 #           product-key: sdfsdfsdfsdfsdf 
