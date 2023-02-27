@@ -46,7 +46,7 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker            
-          target: kindest/node:v1.26.0
+          target: vmware/node:latest
 #           format: json
           format: attest
           verbose: 2
@@ -68,8 +68,9 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker
-          target: kindest/node:v1.26.0
-          format: statement-slsa
+          target: vmware/node:latest
+#           format: statement-slsa
+          format: attest-slsa
 #           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
 #           product-key: sdfsdfsdfsdfsdf 
           verbose: 2
