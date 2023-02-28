@@ -16,29 +16,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: create file and Docker
-        run: | 
-          echo `date` > tmp.txt
-          echo "FROM scratch" > Dockerfile
-          echo "COPY . ." >> Dockerfile
-          docker build -t date:latest .
+#         run: | 
+#           echo `date` > tmp.txt
+#           echo "FROM scratch" > Dockerfile
+#           echo "COPY . ." >> Dockerfile
+#           docker build -t date:latest .
  
       - uses: actions/checkout@v3
       
-      - name: install opa
-        run: | 
-          curl -L -o opa https://openpolicyagent.org/downloads/v0.46.1/opa_linux_amd64_static
-          chmod +x ./opa
-          echo "installed"
-          whereis opa
-          ./opa version
+#       - name: install opa
+#         run: | 
+#           curl -L -o opa https://openpolicyagent.org/downloads/v0.46.1/opa_linux_amd64_static
+#           chmod +x ./opa
+#           echo "installed"
+#           whereis opa
+#           ./opa version
       
       
-      - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
-        uses: GuillaumeFalourd/clone-github-repo-action@v2
-        with:
-            owner: 'scribe-security'
-            repository: 'GitHub-Posture'
-            access-token: ${{ secrets.GH_ACCESS_TOKEN }}
+#       - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
+#         uses: GuillaumeFalourd/clone-github-repo-action@v2
+#         with:
+#             owner: 'scribe-security'
+#             repository: 'GitHub-Posture'
+#             access-token: ${{ secrets.GH_ACCESS_TOKEN }}
       
             
       - name: Generate cyclonedx json SBOM
@@ -46,9 +46,9 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker            
-          target: vmware/node:latest
-#           format: json
-          format: attest
+          target: mongo-express:0.44
+          format: json
+#           format: attest
           verbose: 2
           force: true
           scribe-enable: true
@@ -68,9 +68,9 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker
-          target: vmware/node:latest
-#           format: statement-slsa
-          format: attest-slsa
+          target: mongo-express:0.44
+          format: statement-slsa
+#           format: attest-slsa
 #           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
 #           product-key: sdfsdfsdfsdfsdf 
           verbose: 2
