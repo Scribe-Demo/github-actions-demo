@@ -1,5 +1,5 @@
 
-name: test
+name: dev_signed
 
 on: 
     workflow_dispatch:
@@ -19,108 +19,81 @@ jobs:
      id-token: write
     
     steps:
-#       - name: create file and Docker
-#         run: | 
-#           echo `date` > tmp.txt
-#           echo "FROM scratch" > Dockerfile
-#           echo "COPY . ." >> Dockerfile
-#           docker build -t date:latest .
+      - name: create file and Docker
+        run: | 
+          echo `date` > tmp.txt
+          echo "FROM scratch" > Dockerfile
+          echo "COPY . ." >> Dockerfile
+          docker build -t date:latest .
  
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      
+      - name: install opa
+        run: | 
+          curl -L -o opa https://openpolicyagent.org/downloads/v0.46.1/opa_linux_amd64_static
+          chmod +x ./opa
+          echo "installed"
+          whereis opa
+          ./opa version
+      
+      
+      - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
+        uses: GuillaumeFalourd/clone-github-repo-action@v2
         with:
-         fetch-depth: 0
+            owner: 'scribe-security'
+            repository: 'GitHub-Posture'
+            access-token: ${{ secrets.GH_ACCESS_TOKEN }}
       
-#       - name: install opa
-#         run: | 
-#           curl -L -o opa https://openpolicyagent.org/downloads/v0.46.1/opa_linux_amd64_static
-#           chmod +x ./opa
-#           echo "installed"
-#           whereis opa
-#           ./opa version
-      
-      
-#       - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
-#         uses: GuillaumeFalourd/clone-github-repo-action@v2
-#         with:
-#             owner: 'scribe-security'
-#             repository: 'GitHub-Posture'
-#             access-token: ${{ secrets.GH_ACCESS_TOKEN }}
             
-            
-#       - name: valint attest
-#         id: valint_attest
-#         uses: scribe-security/action-bom@master
-#         with:
-#           target: mongo-express:0.44
-#           format: attest
-#           force: true
-
-#       - name: valint verify
-#         id: valint_verify
-#         uses: scribe-security/action-verify@master
-#         with:
-#           target: mongo-express:0.44
-
-#       - uses: actions/upload-artifact@v2
-#         with:
-#           name: mongo-express:0.44
-#           path: scribe/valint
-# #           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
-#           scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
-#           scribe-client-secret: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_SECRET }}
-# #           scribe-client-id: KPW7yHFizbDhIXlHA28hhUfaoliiPn9u
-# #           scribe-client-secret: 36QnyovoREMnsNKJD9mEPJ9lfet44rM0NF18dPipSkfBCe09zP7aig8AtB80dIPK
-#           scribe-url: "https://api.dev.hub.scribesecurity.com/scribe-proxy"
-#           scribe-login-url: "https://scribesec-dev.us.auth0.com"
-#           scribe-audience: "api.dev.scribesecurity.com"
-          
-      - name: Generate SBOM
-        uses: scribe-security/action-bom@master
+      - name: Generate cyclonedx json SBOM
+        id: gensbom_json
+        uses: scribe-security/actions/gensbom/bom@master
         with:
-         type: docker
-         target: mongo-express:0.44
-         format: json
-         scribe-enable: 'true'
-         scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
-         scribe-client-secret: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_SECRET }}
-         scribe-url: "https://api.dev.hub.scribesecurity.com/scribe-proxy"
-         scribe-login-url: "https://scribesec-dev.us.auth0.com"
-         scribe-audience: "api.dev.scribesecurity.com"
+          type: docker            
+          target: nginx:stable-perl
+          format: attest
+          scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
+          scribe-client-secret: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_SECRET }}
+          scribe-url: "https://api.dev.hub.scribesecurity.com/scribe-proxy"
+          scribe-login-url: "https://scribesec-dev.us.auth0.com"
+          scribe-audience: "api.dev.scribesecurity.com"
 
 
-#       - name: Generate slsa prov statement
-#         id: gensbom_slsa
-#         uses: scribe-security/actions/gensbom/bom@master
-#         with:
-#           type: docker
-#           target: mongo-express:0.44
-# #           format: statement-slsa
-#           format: attest-slsa
-# #           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
-# #           product-key: sdfsdfsdfsdfsdf 
-# #           verbose: 2
-#           force: true
+
+      - name: Generate slsa prov statement
+        id: gensbom_slsa
+        uses: scribe-security/actions/gensbom/bom@master
+        with:
+          type: docker
+          target: nginx:stable-perl
+          format: attest-slsa
+          force: true
           
-#       - name: generate slsa report
-#         run: | # echo "SLSA is great" > slsa.json
-#           cat input.json | sed "s/GH_TOKEN/${{ secrets.GH_ACCESS_TOKEN }}/" | ./opa eval -I --format=pretty -b GitHub-Posture/github data.github.slsa.report > slsa.json
-#           cat slsa.json
-
-#       - uses: actions/upload-artifact@v2
-#         with:
-#           name: provenance
-#           path: ${{ steps.gensbom_slsa.outputs.OUTPUT_PATH }}
+      - name: generate slsa report
+        run: | # echo "SLSA is great" > slsa.json
+          cat input.json | sed "s/GH_TOKEN/${{ secrets.GH_ACCESS_TOKEN }}/" | ./opa eval -I --format=pretty -b GitHub-Posture/github data.github.slsa.report > slsa.json
+          cat slsa.json
+      - uses: actions/upload-artifact@v2
+        with:
+          name: provenance
+          path: ${{ steps.gensbom_slsa.outputs.OUTPUT_PATH }}
           
-#       - uses: actions/upload-artifact@v2
-#         with:
-#           name: slsa_report
-#           path: slsa.json 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: slsa_report
+          path: slsa.json 
           
       - name: Cache input.json
         uses: actions/cache@v3
         with:
          path: ~/cache.txt
          key: my-key
+          
+ 
+       
+          
+ 
+       
           
  
        
