@@ -50,7 +50,7 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker            
-          target: traefik:windowsservercore-1809
+          target: bgweb/php-pronto:latest
           format: attest
           scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_SECRET }}
@@ -65,7 +65,7 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker
-          target: traefik:windowsservercore-1809
+          target: bgweb/php-pronto:latest
           format: attest-slsa
           force: true
           
