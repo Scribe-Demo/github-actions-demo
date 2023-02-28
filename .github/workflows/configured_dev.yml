@@ -46,9 +46,9 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker            
-          target: mongo-express:0.44
-          format: json
-#           format: attest
+          target: aaronshaf/dynamodb-admin
+#           format: json
+          format: attest
           verbose: 2
           force: true
           scribe-enable: true
@@ -68,9 +68,9 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker
-          target: mongo-express:0.44
-          format: statement-slsa
-#           format: attest-slsa
+          target: aaronshaf/dynamodb-admin
+#           format: statement-slsa
+          format: attest-slsa
 #           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
 #           product-key: sdfsdfsdfsdfsdf 
           verbose: 2
