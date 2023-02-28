@@ -14,8 +14,8 @@ jobs:
   scribe-report-test:
     runs-on: ubuntu-latest
     permissions:
-     contents: read
-     packages: write
+#      contents: read
+#      packages: write
      id-token: write
     
     steps:
@@ -52,6 +52,7 @@ jobs:
           type: docker            
           target: bgweb/php-pronto:latest
           format: attest
+          scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_SECRET }}
           scribe-url: "https://api.dev.hub.scribesecurity.com/scribe-proxy"
