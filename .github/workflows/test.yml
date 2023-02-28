@@ -54,7 +54,7 @@ jobs:
         id: valint_attest
         uses: scribe-security/action-bom@master
         with:
-          target: 'busybox:latest'
+          target: mongo-express:0.44
           format: attest
           force: true
 
@@ -62,11 +62,11 @@ jobs:
         id: valint_verify
         uses: scribe-security/action-verify@master
         with:
-          target: 'busybox:latest'
+          target: mongo-express:0.44
 
       - uses: actions/upload-artifact@v2
         with:
-          name: valint-busybox-test
+          name: mongo-express:0.44
           path: scribe/valint
 #           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
           scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
@@ -83,7 +83,7 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker
-          target: npmwharf/elasticsearch-gcs:2.4-alpine-657c247
+          target: mongo-express:0.44
 #           format: statement-slsa
           format: attest-slsa
 #           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
