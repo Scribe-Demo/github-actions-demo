@@ -47,7 +47,7 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker            
-          target: balenalib/aarch64-debian-node:14-sid-20230219
+          target: mysql:latest
           format: json
           verbose: 2
           force: true
@@ -66,7 +66,7 @@ jobs:
         uses: scribe-security/actions/gensbom/bom@master
         with:
           type: docker
-          target: tbalenalib/aarch64-debian-node:14-sid-20230219
+          target: mysql:latest
           format: statement-slsa
 #           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
           verbose: 2
