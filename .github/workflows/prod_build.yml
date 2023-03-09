@@ -54,11 +54,14 @@ jobs:
           scribe-enable: true
 #           product-key: ${{ secrets.SCRIBE_DEV_PRODUCT_KEY }}
 #           product-key: github action 
-          scribe-client-id: ${{ secrets.SCRIBE_PROD_M2M_CLIENT_ID }}
-          scribe-client-secret: ${{ secrets.SCRIBE_PROD_M2M_CLIENT_SECRET }}
+#           scribe-client-id: ${{ secrets.SCRIBE_PROD_M2M_CLIENT_ID }}
+#           scribe-client-secret: ${{ secrets.SCRIBE_PROD_M2M_CLIENT_SECRET }}
+          scribe-client-id: cw24EwmteaxoC6GKhs7j3OLObqD7ExEk          
+          scribe-client-secret: YEb68hluwX0oizSVmZYXcIcbS5DQLrWson0vlmOMcSp7TQdewrKGxSZ1dzqNpx_H
 #           scribe-url: "https://api.dev.hub.scribesecurity.com/scribe-proxy"
 #           scribe-login-url: "https://scribesec-dev.us.auth0.com"
 #           scribe-audience: "api.dev.scribesecurity.com"
+
 
 
       - name: Generate slsa prov statement
