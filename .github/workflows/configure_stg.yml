@@ -117,39 +117,40 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/checkout@v3
-        with:
-          repository: mongo-express/mongo-express
-          ref: refs/tags/v1.0.0-alpha.4
-          path: mongo-express-scm
+#       - uses: actions/checkout@v3
+#         with:
+#           repository: mongo-express/mongo-express
+#           ref: refs/tags/v1.0.0-alpha.4
+#           path: mongo-express-scm
 
-      - name: valint Scm generate bom, upload to scribe
-        id: valint_bom_scm
-        uses: scribe-security/action-bom@master
-        with:
-           type: dir
-           target: 'mongo-express-scm'
-           scribe-enable: true
-#            product-key: ${{ secrets.SCRIBE_STG_PRODUCT_KEY }}
-           product-key: af3dcf58-f290-4f64-a56e-3ffe82b781a6
-           scribe-client-id: ${{ secrets.SCRIBE_STG_M2M_CLIENT_ID }}
-           scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
-           scribe-url: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
-           scribe-login-url: "https://scribesecurity-staging.us.auth0.com"
-           scribe-audience: "api.staging.scribesecurity.com"
+#       - name: valint Scm generate bom, upload to scribe
+#         id: valint_bom_scm
+#         uses: scribe-security/action-bom@master
+#         with:
+#            type: dir
+#            target: 'mongo-express-scm'
+#            scribe-enable: true
+# #            product-key: ${{ secrets.SCRIBE_STG_PRODUCT_KEY }}
+#            product-key: af3dcf58-f290-4f64-a56e-3ffe82b781a6
+#            scribe-client-id: ${{ secrets.SCRIBE_STG_M2M_CLIENT_ID }}
+#            scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
+#            scribe-url: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
+#            scribe-login-url: "https://scribesecurity-staging.us.auth0.com"
+#            scribe-audience: "api.staging.scribesecurity.com"
 
-      - name: Build and push remote
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: mongo-express:1.0.0-alpha.4
+#       - name: Build and push remote
+#         uses: docker/build-push-action@v2
+#         with:
+#           context: .
+#           push: true
+#           tags: mongo-express:1.0.0-alpha.4
 
       - name: valint Image generate bom, upload to scribe
         id: valint_bom_image
         uses: scribe-security/action-bom@master
         with:
-           target: 'mongo-express:1.0.0-alpha.4'
+           type: docker
+           target: mysql:latest
            scribe-enable: true
            product-key: af3dcf58-f290-4f64-a56e-3ffe82b781a6
            scribe-client-id: ${{ secrets.SCRIBE_STG_M2M_CLIENT_ID }}
@@ -164,3 +165,18 @@ jobs:
           path: |
             ${{ steps.valint_bom_scm.outputs.OUTPUT_PATH }}
             ${{ steps.valint_bom_image.outputs.OUTPUT_PATH }}
+            
+      - name: Generate SLSA provenance statement
+        id: valint_slsa_statement
+        uses: scribe-security/action-bom@master
+        with:
+          type: docker
+          target: mysql:latest
+          scribe-enable: true
+          format: statement-slsa
+          product-key: af3dcf58-f290-4f64-a56e-3ffe82b781a6
+
+      - uses: actions/upload-artifact@v2
+        with:
+         name: provenance
+         path: ${{ steps.valint_slsa_statement.outputs.OUTPUT_PATH }}
