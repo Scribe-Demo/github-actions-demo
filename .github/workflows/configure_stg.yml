@@ -151,9 +151,12 @@ jobs:
         with:
            target: 'mongo-express:1.0.0-alpha.4'
            scribe-enable: true
-           product-key:  ${{ secrets.product-key }}
-           scribe-client-id: ${{ secrets.client-id }}
-           scribe-client-secret: ${{ secrets.client-secret }}
+           product-key: af3dcf58-f290-4f64-a56e-3ffe82b781a6
+           scribe-client-id: ${{ secrets.SCRIBE_STG_M2M_CLIENT_ID }}
+           scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
+           scribe-url: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
+           scribe-login-url: "https://scribesecurity-staging.us.auth0.com"
+           scribe-audience: "api.staging.scribesecurity.com"
 
       - uses: actions/upload-artifact@v3
         with:
