@@ -1,99 +1,163 @@
 # This is a basic workflow to help you get started with Actions
 
-name: stg_build
+# name: stg_build
+
+# on: 
+#     push:
+#     workflow_dispatch:
+
+# env:
+#       SCRIBE_URL: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
+#       SCRIBE_LOGIN_URL: "https://scribesecurity-staging.us.auth0.com"
+#       SCRIBE_AUDIENCE: "api.staging.scribesecurity.com"
+
+# jobs:
+  
+#   scribe-report-test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: create file and Docker
+#         run: | 
+#           echo `date` > tmp.txt
+#           echo "FROM scratch" > Dockerfile
+#           echo "COPY . ." >> Dockerfile
+#           docker build -t date:latest .
+ 
+#       - uses: actions/checkout@v3
+      
+#       - name: install opa
+#         run: | 
+#           curl -L -o opa https://openpolicyagent.org/downloads/v0.46.1/opa_linux_amd64_static
+#           chmod +x ./opa
+#           echo "installed"
+#           whereis opa
+#           ./opa version
+      
+      
+#       - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
+#         uses: GuillaumeFalourd/clone-github-repo-action@v2
+#         with:
+#             owner: 'scribe-security'
+#             repository: 'GitHub-Posture'
+#             access-token: ${{ secrets.GH_ACCESS_TOKEN }}
+      
+            
+#       - name: Generate cyclonedx json SBOM
+#         id: gensbom_json
+#         uses: scribe-security/actions/gensbom/bom@master
+#         with:
+#           type: docker            
+#           target: mysql:latest
+#           format: json
+#           verbose: 2
+#           force: true
+#           scribe-enable: true
+# #           product-key: ${{ secrets.SCRIBE_STG_PRODUCT_KEY }}
+# #           product-key: sdfsdfsdfsdfsdf 
+#           scribe-client-id: ${{ secrets.SCRIBE_STG_M2M_CLIENT_ID }}
+#           scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
+#           scribe-url: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
+#           scribe-login-url: "https://scribesecurity-staging.us.auth0.com"
+#           scribe-audience: "api.staging.scribesecurity.com"
+
+
+
+#       - name: Generate slsa prov statement
+#         id: gensbom_slsa
+#         uses: scribe-security/actions/gensbom/bom@master
+#         with:
+#           type: docker
+#           target: mysql:latest
+#           format: statement-slsa
+# #           product-key: ${{ secrets.SCRIBE_STG_PRODUCT_KEY }}
+# #           product-key: sdfsdfsdfsdfsdf 
+#           verbose: 2
+#           force: true
+          
+#       - name: generate slsa report
+#         run: | # echo "SLSA is great" > slsa.json
+#           cat input.json | sed "s/GH_TOKEN/${{ secrets.GH_ACCESS_TOKEN }}/" | ./opa eval -I --format=pretty -b GitHub-Posture/github data.github.slsa.report > slsa.json
+#           cat slsa.json
+
+#       - uses: actions/upload-artifact@v2
+#         with:
+#           name: provenance
+#           path: ${{ steps.gensbom_slsa.outputs.OUTPUT_PATH }}
+          
+#       - uses: actions/upload-artifact@v2
+#         with:
+#           name: slsa_report
+#           path: slsa.json 
+          
+#       - name: Cache input.json
+#         uses: actions/cache@v3
+#         with:
+#          path: ~/cache.txt
+#          key: my-key
+          
+ 
+       
+name: example workflow
 
 on: 
-    push:
-    workflow_dispatch:
-
+  push:
+    tags:
+      - "*"
 env:
       SCRIBE_URL: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
       SCRIBE_LOGIN_URL: "https://scribesecurity-staging.us.auth0.com"
       SCRIBE_AUDIENCE: "api.staging.scribesecurity.com"
-
+      
 jobs:
-  
-  scribe-report-test:
+  scribe-evidence-test:
     runs-on: ubuntu-latest
     steps:
-      - name: create file and Docker
-        run: | 
-          echo `date` > tmp.txt
-          echo "FROM scratch" > Dockerfile
-          echo "COPY . ." >> Dockerfile
-          docker build -t date:latest .
- 
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
       - uses: actions/checkout@v3
-      
-      - name: install opa
-        run: | 
-          curl -L -o opa https://openpolicyagent.org/downloads/v0.46.1/opa_linux_amd64_static
-          chmod +x ./opa
-          echo "installed"
-          whereis opa
-          ./opa version
-      
-      
-      - name: Clone GuillaumeFalourd/formulas-training PRIVATE repository
-        uses: GuillaumeFalourd/clone-github-repo-action@v2
         with:
-            owner: 'scribe-security'
-            repository: 'GitHub-Posture'
-            access-token: ${{ secrets.GH_ACCESS_TOKEN }}
-      
-            
-      - name: Generate cyclonedx json SBOM
-        id: gensbom_json
-        uses: scribe-security/actions/gensbom/bom@master
-        with:
-          type: docker            
-          target: mysql:latest
-          format: json
-          verbose: 2
-          force: true
-          scribe-enable: true
-#           product-key: ${{ secrets.SCRIBE_STG_PRODUCT_KEY }}
-#           product-key: sdfsdfsdfsdfsdf 
-          scribe-client-id: ${{ secrets.SCRIBE_STG_M2M_CLIENT_ID }}
-          scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
-          scribe-url: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
-          scribe-login-url: "https://scribesecurity-staging.us.auth0.com"
-          scribe-audience: "api.staging.scribesecurity.com"
+          repository: mongo-express/mongo-express
+          ref: refs/tags/v1.0.0-alpha.4
+          path: mongo-express-scm
 
+      - name: valint Scm generate bom, upload to scribe
+        id: valint_bom_scm
+        uses: scribe-security/action-bom@master
+        with:
+           type: dir
+           target: 'mongo-express-scm'
+           scribe-enable: true
+#            product-key: ${{ secrets.SCRIBE_STG_PRODUCT_KEY }}
+           product-key: af3dcf58-f290-4f64-a56e-3ffe82b781a6
+           scribe-client-id: ${{ secrets.SCRIBE_STG_M2M_CLIENT_ID }}
+           scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
+           scribe-url: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
+           scribe-login-url: "https://scribesecurity-staging.us.auth0.com"
+           scribe-audience: "api.staging.scribesecurity.com"
 
+      - name: Build and push remote
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: mongo-express:1.0.0-alpha.4
 
-      - name: Generate slsa prov statement
-        id: gensbom_slsa
-        uses: scribe-security/actions/gensbom/bom@master
+      - name: valint Image generate bom, upload to scribe
+        id: valint_bom_image
+        uses: scribe-security/action-bom@master
         with:
-          type: docker
-          target: mysql:latest
-          format: statement-slsa
-#           product-key: ${{ secrets.SCRIBE_STG_PRODUCT_KEY }}
-#           product-key: sdfsdfsdfsdfsdf 
-          verbose: 2
-          force: true
-          
-      - name: generate slsa report
-        run: | # echo "SLSA is great" > slsa.json
-          cat input.json | sed "s/GH_TOKEN/${{ secrets.GH_ACCESS_TOKEN }}/" | ./opa eval -I --format=pretty -b GitHub-Posture/github data.github.slsa.report > slsa.json
-          cat slsa.json
+           target: 'mongo-express:1.0.0-alpha.4'
+           scribe-enable: true
+           product-key:  ${{ secrets.product-key }}
+           scribe-client-id: ${{ secrets.client-id }}
+           scribe-client-secret: ${{ secrets.client-secret }}
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
-          name: provenance
-          path: ${{ steps.gensbom_slsa.outputs.OUTPUT_PATH }}
-          
-      - uses: actions/upload-artifact@v2
-        with:
-          name: slsa_report
-          path: slsa.json 
-          
-      - name: Cache input.json
-        uses: actions/cache@v3
-        with:
-         path: ~/cache.txt
-         key: my-key
-          
- 
-       
+          name: scribe-evidence
+          path: |
+            ${{ steps.valint_bom_scm.outputs.OUTPUT_PATH }}
+            ${{ steps.valint_bom_image.outputs.OUTPUT_PATH }}
