@@ -97,7 +97,7 @@
           
  
        
-name: example workflow
+name: stg_valint
 
 on: 
   push:
