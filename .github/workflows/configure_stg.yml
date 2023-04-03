@@ -134,7 +134,7 @@ jobs:
            target: 'mongo-express-scm'
            scribe-enable: true
 #            product-key: ${{ secrets.SCRIBE_STG_PRODUCT_KEY }}
-           product-key: "0_github_upload_build"
+#            product-key: "0_github_upload_build"
            scribe-client-id: ${{ secrets.SCRIBE_STG_M2M_CLIENT_ID }}
            scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
            scribe-url: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
@@ -155,7 +155,7 @@ jobs:
            type: docker
            target: mysql:latest
            scribe-enable: true
-           product-key: "0_github_upload_build"
+#            product-key: "0_github_upload_build"
            scribe-client-id: ${{ secrets.SCRIBE_STG_M2M_CLIENT_ID }}
            scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
            scribe-url: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
@@ -177,7 +177,7 @@ jobs:
           target: mysql:latest
           scribe-enable: true
           format: statement-slsa
-          product-key: "0_github_upload_build"
+#           product-key: "0_github_upload_build"
 
       - uses: actions/upload-artifact@v2
         with:
