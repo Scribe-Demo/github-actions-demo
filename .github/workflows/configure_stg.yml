@@ -1,3 +1,85 @@
+name: stg_valint
+
+on: 
+    push:
+    workflow_dispatch:
+
+jobs:
+  scribe-report-test:
+    runs-on: ubuntu-latest
+    permissions:
+#      contents: read
+#      packages: write
+     id-token: write
+     
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/checkout@v3
+        with:
+          repository: mongo-express/mongo-express
+          ref: refs/tags/v1.0.0-alpha.4
+          path: mongo-express-scm
+
+      - name: Scm generate bom, upload to scribe
+        id: valint_bom_scm
+        uses: scribe-security/action-bom@master
+        with:
+           type: dir
+           target: 'mongo-express-scm'
+#            format: statement
+#            format: attest
+#            scribe-enable: true
+#            product-key: "statement1"
+           scribe-client-id: ${{ secrets.SCRIBE_STG_M2M_CLIENT_ID }}
+           scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
+           product-key: "00DEMO test"
+
+
+      # Build and push your image - this example skips this step as we're using the published mongo express.
+
+      - name: Image generate bom, upload to scribe
+        id: valint_bom_image
+        uses: scribe-security/action-bom@master
+        with:
+          type: docker # To be included only if you want to to use docker daemon to access the image (for example, creating your docker image locally)
+          target: mongo-express:latest
+#           format: statement
+#           format: attest
+          scribe-enable: true
+#           product-key: "statement1"
+          scribe-client-id: ${{ secrets.SSCRIBE_STG_M2M_CLIENT_ID }}
+          scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
+          product-key: "00DEMO test"
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: scribe-reports
+          path: |
+            ${{ steps.valint_bom_scm.outputs.OUTPUT_PATH }}
+            ${{ steps.valint_bom_image.outputs.OUTPUT_PATH }}
+            
+      - name: Generate SLSA provenance statement
+        id: valint_slsa_statement
+        uses: scribe-security/action-bom@master
+        with:
+          target: mongo-express:latest
+          format: statement-slsa
+#           format: attest-slsa
+          force: true
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: provenance
+          path: ${{ steps.valint_slsa_statement.outputs.OUTPUT_PATH }}     
+
+
+
+
+
 # This is a basic workflow to help you get started with Actions
 
 # name: stg_build
@@ -97,89 +179,89 @@
           
  
        
-name: stg_valint
+# name: stg_valint
 
-on: 
-    workflow_dispatch:
+# on: 
+#     workflow_dispatch:
     
-env:
-      SCRIBE_URL: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
-      SCRIBE_LOGIN_URL: "https://scribesecurity-staging.us.auth0.com"
-      SCRIBE_AUDIENCE: "api.staging.scribesecurity.com"
+# env:
+#       SCRIBE_URL: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
+#       SCRIBE_LOGIN_URL: "https://scribesecurity-staging.us.auth0.com"
+#       SCRIBE_AUDIENCE: "api.staging.scribesecurity.com"
       
-jobs:
-  scribe-evidence-test:
-    runs-on: ubuntu-latest
-    permissions:
-#      contents: read
-#      packages: write
-     id-token: write
-    steps:
+# jobs:
+#   scribe-evidence-test:
+#     runs-on: ubuntu-latest
+#     permissions:
+# #      contents: read
+# #      packages: write
+#      id-token: write
+#     steps:
 
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+#       - uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0
 
-      - uses: actions/checkout@v3
-        with:
-          repository: mongo-express/mongo-express
-          ref: refs/tags/v1.0.0-alpha.4
-          path: mongo-express-scm
+#       - uses: actions/checkout@v3
+#         with:
+#           repository: mongo-express/mongo-express
+#           ref: refs/tags/v1.0.0-alpha.4
+#           path: mongo-express-scm
 
-      - name: valint Scm generate bom, upload to scribe
-        id: valint_bom_scm
-        uses: scribe-security/action-bom@master
-        with:
-           type: dir
-           target: 'mongo-express-scm'
-           scribe-enable: true
-#            product-key: ${{ secrets.SCRIBE_STG_PRODUCT_KEY }}
-#            product-key: "0_github_upload_build"
-           scribe-client-id: ${{ secrets.SCRIBE_STG_M2M_CLIENT_ID }}
-           scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
-           scribe-url: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
-           scribe-login-url: "https://scribesecurity-staging.us.auth0.com"
-           scribe-audience: "api.staging.scribesecurity.com"
+#       - name: valint Scm generate bom, upload to scribe
+#         id: valint_bom_scm
+#         uses: scribe-security/action-bom@master
+#         with:
+#            type: dir
+#            target: 'mongo-express-scm'
+#            scribe-enable: true
+# #            product-key: ${{ secrets.SCRIBE_STG_PRODUCT_KEY }}
+# #            product-key: "0_github_upload_build"
+#            scribe-client-id: ${{ secrets.SCRIBE_STG_M2M_CLIENT_ID }}
+#            scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
+#            scribe-url: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
+#            scribe-login-url: "https://scribesecurity-staging.us.auth0.com"
+#            scribe-audience: "api.staging.scribesecurity.com"
 
-      - name: Build and push remote
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: mongo-express:1.0.0-alpha.4
+#       - name: Build and push remote
+#         uses: docker/build-push-action@v2
+#         with:
+#           context: .
+#           push: true
+#           tags: mongo-express:1.0.0-alpha.4
 
-      - name: valint Image generate bom, upload to scribe
-        id: valint_bom_image
-        uses: scribe-security/action-bom@master
-        with:
-           type: docker
-           target: mysql:latest
-           scribe-enable: true
-#            product-key: "0_github_upload_build"
-           scribe-client-id: ${{ secrets.SCRIBE_STG_M2M_CLIENT_ID }}
-           scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
-           scribe-url: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
-           scribe-login-url: "https://scribesecurity-staging.us.auth0.com"
-           scribe-audience: "api.staging.scribesecurity.com"
+#       - name: valint Image generate bom, upload to scribe
+#         id: valint_bom_image
+#         uses: scribe-security/action-bom@master
+#         with:
+#            type: docker
+#            target: mysql:latest
+#            scribe-enable: true
+# #            product-key: "0_github_upload_build"
+#            scribe-client-id: ${{ secrets.SCRIBE_STG_M2M_CLIENT_ID }}
+#            scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
+#            scribe-url: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
+#            scribe-login-url: "https://scribesecurity-staging.us.auth0.com"
+#            scribe-audience: "api.staging.scribesecurity.com"
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: scribe-evidence
-          path: |
-            ${{ steps.valint_bom_scm.outputs.OUTPUT_PATH }}
-            ${{ steps.valint_bom_image.outputs.OUTPUT_PATH }}
+#       - uses: actions/upload-artifact@v3
+#         with:
+#           name: scribe-evidence
+#           path: |
+#             ${{ steps.valint_bom_scm.outputs.OUTPUT_PATH }}
+#             ${{ steps.valint_bom_image.outputs.OUTPUT_PATH }}
             
-      - name: Generate SLSA provenance statement
-        id: valint_slsa_statement
-        uses: scribe-security/action-bom@master
-        with:
-          type: docker
-          target: mysql:latest
-          scribe-enable: true
-          format: statement-slsa
-#           product-key: "0_github_upload_build"
+#       - name: Generate SLSA provenance statement
+#         id: valint_slsa_statement
+#         uses: scribe-security/action-bom@master
+#         with:
+#           type: docker
+#           target: mysql:latest
+#           scribe-enable: true
+#           format: statement-slsa
+# #           product-key: "0_github_upload_build"
 
-      - uses: actions/upload-artifact@v2
-        with:
-         name: provenance
-         path: ${{ steps.valint_slsa_statement.outputs.OUTPUT_PATH }}
+#       - uses: actions/upload-artifact@v2
+#         with:
+#          name: provenance
+#          path: ${{ steps.valint_slsa_statement.outputs.OUTPUT_PATH }}
