@@ -100,9 +100,8 @@
 name: stg_valint
 
 on: 
-  push:
-    tags:
-      - "*"
+    workflow_dispatch:
+    
 env:
       SCRIBE_URL: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
       SCRIBE_LOGIN_URL: "https://scribesecurity-staging.us.auth0.com"
