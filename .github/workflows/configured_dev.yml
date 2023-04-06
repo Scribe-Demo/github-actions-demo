@@ -72,7 +72,7 @@ jobs:
         uses: scribe-security/action-bom@master
         with:
           target: mongo-express:1.0.0-alpha.4
-          format: statement-slsa
+#           format: statement-slsa
           product-key: "00_github_upload_build"
 
       - uses: actions/upload-artifact@v2
