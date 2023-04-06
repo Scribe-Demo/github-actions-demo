@@ -15,7 +15,7 @@ jobs:
  scribe-report-test:
     runs-on: ubuntu-latest
     permissions:
-     id-token: write
+      id-token: write
     
     
     steps:
@@ -24,25 +24,25 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/checkout@v3
-        with:
-          repository: mongo-express/mongo-express
-          ref: refs/tags/v1.0.0-alpha.4
-          path: mongo-express-scm
+#       - uses: actions/checkout@v3
+#         with:
+#           repository: mongo-express/mongo-express
+#           ref: refs/tags/v1.0.0-alpha.4
+#           path: mongo-express-scm
 
-      - name: Scm generate bom, upload to scribe
-        id: valint_bom_scm
-        uses: scribe-security/action-bom@master
-        with:
-           type: dir
-           target: 'mongo-express-scm'
-           scribe-enable: true
-           product-key: "00_github_upload_build"
-           scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
-           scribe-client-secret: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_SECRET }}
-           scribe-url: "https://api.dev.hub.scribesecurity.com/scribe-proxy"
-           scribe-login-url: "https://scribesec-dev.us.auth0.com"
-           scribe-audience: "api.dev.scribesecurity.com"
+#       - name: Scm generate bom, upload to scribe
+#         id: valint_bom_scm
+#         uses: scribe-security/action-bom@master
+#         with:
+#            type: dir
+#            target: 'mongo-express-scm'
+#            scribe-enable: true
+#            product-key: "00_github_upload_build"
+#            scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
+#            scribe-client-secret: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_SECRET }}
+#            scribe-url: "https://api.dev.hub.scribesecurity.com/scribe-proxy"
+#            scribe-login-url: "https://scribesec-dev.us.auth0.com"
+#            scribe-audience: "api.dev.scribesecurity.com"
 
       # Build and push your image - this example skips this step as we're using the published mongo express.
 
@@ -51,7 +51,7 @@ jobs:
         uses: scribe-security/action-bom@master
         with:
           type: docker # To be included only if you want to to use docker daemon to access the image (for example, creating your docker image locally)
-          target: 'mongo-express:1.0.0-alpha.4'
+          target: mysql:latest
           scribe-enable: true
           product-key: "00_github_upload_build"
           scribe-client-id: ${{ secrets.SCRIBE_DEV_M2M_CLIENT_ID }}
@@ -75,8 +75,8 @@ jobs:
         id: valint_slsa_statement
         uses: scribe-security/action-bom@master
         with:
-          target: mongo-express:1.0.0-alpha.4
-#           format: statement-slsa
+          target: mysql:latest
+          format: statement-slsa
           product-key: "00_github_upload_build"
 
       - uses: actions/upload-artifact@v2
