@@ -1,7 +1,7 @@
 name: stg_valint
 
 on: 
-    push:
+#     push:
     workflow_dispatch:
     
 env:
