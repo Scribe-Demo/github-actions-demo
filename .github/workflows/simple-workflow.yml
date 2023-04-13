@@ -3,7 +3,7 @@
 name: simply-workflow
 
 on: 
-    push:
+#     push:
     workflow_dispatch:
 
 env:
