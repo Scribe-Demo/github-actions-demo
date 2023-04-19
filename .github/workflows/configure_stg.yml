@@ -1,5 +1,4 @@
-name: stg_my_npm_test
-
+name: stg_valint_docker_image
 on: 
 #     push:
     workflow_dispatch:
