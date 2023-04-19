@@ -41,7 +41,7 @@ jobs:
 #            product-key: "statement1"
            scribe-client-id: ${{ secrets.SCRIBE_STG_M2M_CLIENT_ID }}
            scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
-           product-key: "00_stg_github_upload"
+           product-key: "Sprint_29"
            scribe-url: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
            scribe-login-url: "https://scribesecurity-staging.us.auth0.com"
            scribe-audience: "api.staging.scribesecurity.com"
@@ -61,7 +61,7 @@ jobs:
 #           product-key: "statement1"
           scribe-client-id: ${{ secrets.SSCRIBE_STG_M2M_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
-          product-key: "00_stg_github_upload"
+          product-key: "Sprint_29"
           scribe-url: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
           scribe-login-url: "https://scribesecurity-staging.us.auth0.com"
           scribe-audience: "api.staging.scribesecurity.com"
