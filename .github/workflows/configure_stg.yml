@@ -1,40 +1,43 @@
-name: stg_valint
+name: stg_my_npm_test
 
 on: 
-#   push:
-  workflow_dispatch:
-  
+#     push:
+    workflow_dispatch:
+
 env:
-      SCRIBE_URL: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
-      SCRIBE_LOGIN_URL: "https://scribesecurity-staging.us.auth0.com"
-      SCRIBE_AUDIENCE: "api.staging.scribesecurity.com"  
+  SCRIBE_URL: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
+  SCRIBE_LOGIN_URL: "https://scribesecurity-staging.us.auth0.com"
+  SCRIBE_AUDIENCE: "api.staging.scribesecurity.com"
 
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  scribe-report-test:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    
-    permissions:
-     id-token: write
-    
-    steps:
 
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-
-      # Build and push your image - this example skips this step as we're using the published mongo express.
-
+          
       - name: Image generate bom, upload to scribe
         id: valint_bom_image
         uses: scribe-security/action-bom@master
         with:
-          type: docker # To be included only if you want to to use docker daemon to access the image (for example, creating your docker image locally)
-          target: mongo-express:latest
+          type: docker
+          target: requarks/wiki:2.5.219
+#           format: attest-cyclonedx-json
+          verbose: 2
           scribe-enable: true
-          scribe-client-id: ${{ secrets.SSCRIBE_STG_M2M_CLIENT_ID }}
-          scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
-          product-key: "Sprint_29"
-          sscribe-url: ${{ env.SCRIBE_URL }}
+          scribe-client-id: ${{ secrets.SCRIBE_STG_CLIENT_ID }}
+          scribe-client-secret: ${{ secrets.SCRIBE_STG_CLIENT_SECRET }}
+          product-key: "Sprint_28"
+          scribe-url: ${{ env.SCRIBE_URL }}
           scribe-login-url: ${{ env.SCRIBE_LOGIN_URL }}
           scribe-audience: ${{ env.SCRIBE_AUDIENCE }}
 
@@ -44,19 +47,16 @@ jobs:
           path: |
             ${{ steps.valint_bom_scm.outputs.OUTPUT_PATH }}
             ${{ steps.valint_bom_image.outputs.OUTPUT_PATH }}
-
-
+            
       - name: Generate SLSA provenance statement
         id: valint_slsa_statement
         uses: scribe-security/action-bom@master
         with:
-          target: mongo-express:latest
-#           format: statement-slsa
-#           format: attest-slsa
-          product-key: "Sprint_29"
-          force: true
+          target: requarks/wiki:2.5.219
+          format: statement-slsa
+          product-key: "Sprint_28"
 
       - uses: actions/upload-artifact@v2
         with:
           name: provenance
-          path: ${{ steps.valint_slsa_statement.outputs.OUTPUT_PATH }}     
+          path: ${{ steps.valint_slsa_statement.outputs.OUTPUT_PATH }}
