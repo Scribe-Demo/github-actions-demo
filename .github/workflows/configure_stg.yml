@@ -1,25 +1,28 @@
 name: stg_valint
 
 on: 
-#     push:
-    workflow_dispatch:
-    
+#   push:
+  workflow_dispatch:
+  
 env:
       SCRIBE_URL: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
       SCRIBE_LOGIN_URL: "https://scribesecurity-staging.us.auth0.com"
-      SCRIBE_AUDIENCE: "api.staging.scribesecurity.com"
+      SCRIBE_AUDIENCE: "api.staging.scribesecurity.com"  
 
 jobs:
   scribe-report-test:
     runs-on: ubuntu-latest
+    
     permissions:
      id-token: write
-     
+    
     steps:
 
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
+      # Build and push your image - this example skips this step as we're using the published mongo express.
 
       - name: Image generate bom, upload to scribe
         id: valint_bom_image
@@ -27,8 +30,6 @@ jobs:
         with:
           type: docker # To be included only if you want to to use docker daemon to access the image (for example, creating your docker image locally)
           target: mongo-express:latest
-#           format: statement
-#           format: attest
           scribe-enable: true
           scribe-client-id: ${{ secrets.SSCRIBE_STG_M2M_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
@@ -43,13 +44,14 @@ jobs:
           path: |
             ${{ steps.valint_bom_scm.outputs.OUTPUT_PATH }}
             ${{ steps.valint_bom_image.outputs.OUTPUT_PATH }}
-            
+
+
       - name: Generate SLSA provenance statement
         id: valint_slsa_statement
         uses: scribe-security/action-bom@master
         with:
           target: mongo-express:latest
-          format: statement-slsa
+#           format: statement-slsa
 #           format: attest-slsa
           product-key: "Sprint_29"
           force: true
