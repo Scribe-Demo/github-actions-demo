@@ -34,9 +34,9 @@ jobs:
           scribe-client-id: ${{ secrets.SSCRIBE_STG_M2M_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_STG_M2M_CLIENT_SECRET }}
           product-key: "Sprint_29"
-          scribe-url: "https://api.staging.hub.scribesecurity.com/scribe-proxy"
-          scribe-login-url: "https://scribesecurity-staging.us.auth0.com"
-          scribe-audience: "api.staging.scribesecurity.com"
+          sscribe-url: ${{ env.SCRIBE_URL }}
+          scribe-login-url: ${{ env.SCRIBE_LOGIN_URL }}
+          scribe-audience: ${{ env.SCRIBE_AUDIENCE }}
 
       - uses: actions/upload-artifact@v2
         with:
