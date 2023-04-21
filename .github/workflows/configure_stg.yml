@@ -26,16 +26,16 @@ jobs:
           
       - name: Image generate bom, upload to scribe
         id: valint_bom_image
-        uses: scribe-security/action-bom@master
+        uses: scribe-security/action-bom@dev
         with:
           type: docker
           target: requarks/wiki:2.5.219
-#           format: attest-cyclonedx-json
+          format: attest-cyclonedx-json
           verbose: 2
           scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_STG_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_STG_CLIENT_SECRET }}
-          product-key: "Sprint_28"
+          product-key: "Sprint_28_check"
           scribe-url: ${{ env.SCRIBE_URL }}
           scribe-login-url: ${{ env.SCRIBE_LOGIN_URL }}
           scribe-audience: ${{ env.SCRIBE_AUDIENCE }}
@@ -49,11 +49,11 @@ jobs:
             
       - name: Generate SLSA provenance statement
         id: valint_slsa_statement
-        uses: scribe-security/action-bom@master
+        uses: scribe-security/action-bom@dev
         with:
           target: requarks/wiki:2.5.219
-          format: statement-slsa
-          product-key: "Sprint_28"
+          format: attest-slsa
+          product-key: "Sprint_28_check"
 
       - uses: actions/upload-artifact@v2
         with:
