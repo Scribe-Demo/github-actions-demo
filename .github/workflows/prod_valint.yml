@@ -30,7 +30,19 @@ jobs:
           scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "00Sprint_28_sattest_slsa"
+          product-key: "00Sprint_28_verify"
+
+
+#         new code  
+      - uses: scribe-security/action-verify@master
+        with:
+          type: docker
+          target: mongo-express:1.0.0-alpha
+          format: attest
+          scribe-enable: true
+          scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
+          scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
+          product-key: "00Sprint_28_verify"
 
 
       - uses: actions/upload-artifact@v2
@@ -45,8 +57,8 @@ jobs:
         uses: scribe-security/action-bom@master
         with:
           target: mongo-express:1.0.0-alpha
-          format: attest-slsa
-          product-key: "00Sprint_28_sattest_slsa"
+          format: statement-slsa
+          product-key: "00Sprint_28_verify"
 
       - uses: actions/upload-artifact@v2
         with:
