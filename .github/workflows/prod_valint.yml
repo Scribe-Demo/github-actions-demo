@@ -25,7 +25,7 @@ jobs:
         with:
           type: docker
           target: mongo-express:latest
-          format: statement-cyclonedx-json
+#           format: statement-cyclonedx-json
           verbose: 2
           scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
