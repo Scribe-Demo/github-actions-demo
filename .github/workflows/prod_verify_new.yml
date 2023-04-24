@@ -28,7 +28,7 @@ jobs:
         uses: scribe-security/action-bom@master
         with:
           type: docker
-          target: mysql:latest
+          target: circleci/node:erbium-bullseye-browsers-legacy
           format: attest
           verbose: 2
           scribe-enable: true
@@ -37,18 +37,17 @@ jobs:
           product-key: "Sprint_28_attest"
 
 
-# # #         new code  
-#       - uses: scribe-security/action-verify@master
-#         with:
-#           type: docker
-#           target: mysql:latest
-#           format: attest
-#           scribe-enable: true
-#           verbose: 2
-#           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
-#           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-#           product-key: "00_tes_verify"
-
+# #         new code  
+      - uses: scribe-security/action-verify@master
+        with:
+          type: docker
+          target: circleci/node:erbium-bullseye-browsers-legacy
+          format: attest
+          scribe-enable: true
+          verbose: 2
+          scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
+          scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
+          product-key: "Sprint_28_attest"
 
       - uses: actions/upload-artifact@v2
         with:
@@ -61,7 +60,7 @@ jobs:
         id: valint_slsa_statement
         uses: scribe-security/action-bom@master
         with:
-          target: mysql:latest
+          target: circleci/node:erbium-bullseye-browsers-legacy
           format: statement-slsa
           product-key: "Sprint_28_attest"
 
