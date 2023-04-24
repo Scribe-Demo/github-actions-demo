@@ -25,12 +25,12 @@ jobs:
         with:
           type: docker
           target: mongo-express:1.0.0-alpha
-          format: statement-cyclonedx-json	
+#           format: statement-cyclonedx-json	
           verbose: 2
           scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "00Sprint_28_statement-cyclonedx-json"
+          product-key: "00Sprint_28_statement-cyclonedx-json1"
 
 
       - uses: actions/upload-artifact@v2
