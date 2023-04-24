@@ -25,12 +25,12 @@ jobs:
         with:
           type: docker
           target: requarks/wiki:2.5.219
-          format: attest-cyclonedx-json
+          format: statement-cyclonedx-json
           verbose: 2
           scribe-enable: true
-          scribe-client-id: ${{ secrets.SCRIBE_CLIENT_ID }}
-          scribe-client-secret: ${{ secrets.SCRIBE_CLIENT_SECRET }}
-          product-key: "Sprint_28_check"
+          scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
+          scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
+          product-key: "Sprint_28_statement-cyclonedx-json"
 
 
       - uses: actions/upload-artifact@v2
@@ -45,8 +45,8 @@ jobs:
         uses: scribe-security/action-bom@dev
         with:
           target: requarks/wiki:2.5.219
-          format: attest-slsa
-          product-key: "Sprint_28_check"
+          format: statement-slsa
+          product-key: "Sprint_28_statement-cyclonedx-json"
 
       - uses: actions/upload-artifact@v2
         with:
