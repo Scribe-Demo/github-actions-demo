@@ -24,7 +24,7 @@ jobs:
         uses: scribe-security/action-bom@master
         with:
           type: docker
-          target: mongo-express:latest
+          target: mongo-express:1.0.0-alpha
           format: statement-cyclonedx-json	
           verbose: 2
           scribe-enable: true
@@ -44,7 +44,7 @@ jobs:
         id: valint_slsa_statement
         uses: scribe-security/action-bom@master
         with:
-          target: mongo-express:latest
+          target: mongo-express:1.0.0-alpha
           format: statement-slsa
           product-key: "00Sprint_28_statement-cyclonedx-json"
 
