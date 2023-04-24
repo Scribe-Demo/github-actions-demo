@@ -1,4 +1,4 @@
-name: prod_valint_docker_image
+name: prod_valint_mongo
 on: 
 #     push:
     workflow_dispatch:
