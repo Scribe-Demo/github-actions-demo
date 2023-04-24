@@ -24,13 +24,13 @@ jobs:
         uses: scribe-security/action-bom@master
         with:
           type: docker
-          target: requarks/wiki:2.5.219
+          target: mongo-express:latest
           format: statement-cyclonedx-json
           verbose: 2
           scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "Sprint_28_statement-cyclonedx-json"
+          product-key: "00Sprint_28_statement-cyclonedx-json"
 
 
       - uses: actions/upload-artifact@v2
@@ -44,9 +44,9 @@ jobs:
         id: valint_slsa_statement
         uses: scribe-security/action-bom@master
         with:
-          target: requarks/wiki:2.5.219
+          target: mongo-express:latest
           format: statement-slsa
-          product-key: "Sprint_28_statement-cyclonedx-json"
+          product-key: "00Sprint_28_statement-cyclonedx-json"
 
       - uses: actions/upload-artifact@v2
         with:
