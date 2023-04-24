@@ -40,9 +40,10 @@ jobs:
           target: mongo-express:1.0.0-alpha
           format: attest
           scribe-enable: true
+          verbose: 2
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "00Sprint_28_verify"
+          product-key: "00Sprint_28_verify_withVerbose"
 
 
       - uses: actions/upload-artifact@v2
@@ -58,7 +59,7 @@ jobs:
         with:
           target: mongo-express:1.0.0-alpha
           format: statement-slsa
-          product-key: "00Sprint_28_verify"
+          product-key: "00Sprint_28_verify_withVerbose"
 
       - uses: actions/upload-artifact@v2
         with:
