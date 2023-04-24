@@ -1,0 +1,54 @@
+name: prod_valint_docker_image
+on: 
+#     push:
+    workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          
+      - name: Image generate bom, upload to scribe
+        id: valint_bom_image
+        uses: scribe-security/action-bom@dev
+        with:
+          type: docker
+          target: requarks/wiki:2.5.219
+          format: attest-cyclonedx-json
+          verbose: 2
+          scribe-enable: true
+          scribe-client-id: ${{ secrets.SCRIBE_CLIENT_ID }}
+          scribe-client-secret: ${{ secrets.SCRIBE_CLIENT_SECRET }}
+          product-key: "Sprint_28_check"
+
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: scribe-reports
+          path: |
+            ${{ steps.valint_bom_scm.outputs.OUTPUT_PATH }}
+            ${{ steps.valint_bom_image.outputs.OUTPUT_PATH }}
+            
+      - name: Generate SLSA provenance statement
+        id: valint_slsa_statement
+        uses: scribe-security/action-bom@dev
+        with:
+          target: requarks/wiki:2.5.219
+          format: attest-slsa
+          product-key: "Sprint_28_check"
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: provenance
+          path: ${{ steps.valint_slsa_statement.outputs.OUTPUT_PATH }}
