@@ -21,7 +21,7 @@ jobs:
           
       - name: Image generate bom, upload to scribe
         id: valint_bom_image
-        uses: scribe-security/action-bom@dev
+        uses: scribe-security/action-bom@master
         with:
           type: docker
           target: requarks/wiki:2.5.219
@@ -42,7 +42,7 @@ jobs:
             
       - name: Generate SLSA provenance statement
         id: valint_slsa_statement
-        uses: scribe-security/action-bom@dev
+        uses: scribe-security/action-bom@master
         with:
           target: requarks/wiki:2.5.219
           format: statement-slsa
