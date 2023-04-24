@@ -25,12 +25,12 @@ jobs:
         with:
           type: docker
           target: mongo-express:latest
-          format: attest-cyclonedx-json
+          format: attest
           verbose: 2
           scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "00Sprint_28_attest-cyclonedx-json"
+          product-key: "00Sprint_28_attest"
 
 
       - uses: actions/upload-artifact@v2
@@ -46,7 +46,7 @@ jobs:
         with:
           target: mongo-express:latest
           format: statement-slsa
-          product-key: "00Sprint_28_attest-cyclonedx-json"
+          product-key: "00Sprint_28_attest"
 
       - uses: actions/upload-artifact@v2
         with:
