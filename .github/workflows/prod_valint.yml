@@ -30,7 +30,7 @@ jobs:
           scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "00Sprint_28_statement-cyclonedx-json1"
+          product-key: "00Sprint_28_sattest_slsa"
 
 
       - uses: actions/upload-artifact@v2
@@ -46,7 +46,7 @@ jobs:
         with:
           target: mongo-express:1.0.0-alpha
           format: attest-slsa
-          product-key: "00Sprint_28_statement-cyclonedx-json"
+          product-key: "00Sprint_28_sattest_slsa"
 
       - uses: actions/upload-artifact@v2
         with:
