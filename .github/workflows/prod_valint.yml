@@ -45,7 +45,7 @@ jobs:
         uses: scribe-security/action-bom@master
         with:
           target: mongo-express:1.0.0-alpha
-          format: statement-slsa
+          format: attest-slsa
           product-key: "00Sprint_28_statement-cyclonedx-json"
 
       - uses: actions/upload-artifact@v2
