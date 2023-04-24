@@ -29,25 +29,25 @@ jobs:
         with:
           type: docker
           target: mysql:latest
-#           format: statement-cyclonedx-json	
-          verbose: 2
-          scribe-enable: true
-          scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
-          scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "00_tes_verify"
-
-
-# #         new code  
-      - uses: scribe-security/action-verify@master
-        with:
-          type: docker
-          target: mysql:latest
           format: attest
-          scribe-enable: true
           verbose: 2
+          scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "00_tes_verify"
+          product-key: "Sprint_28_attest"
+
+
+# # #         new code  
+#       - uses: scribe-security/action-verify@master
+#         with:
+#           type: docker
+#           target: mysql:latest
+#           format: attest
+#           scribe-enable: true
+#           verbose: 2
+#           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
+#           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
+#           product-key: "00_tes_verify"
 
 
       - uses: actions/upload-artifact@v2
@@ -63,7 +63,7 @@ jobs:
         with:
           target: mysql:latest
           format: statement-slsa
-          product-key: "00_tes_verify"
+          product-key: "Sprint_28_attest"
 
       - uses: actions/upload-artifact@v2
         with:
