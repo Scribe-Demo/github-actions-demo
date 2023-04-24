@@ -34,20 +34,20 @@ jobs:
           scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "00Sprint_23_attest"
+          product-key: "00_tes_verify"
 
 
 # #         new code  
-#       - uses: scribe-security/action-verify@master
-#         with:
-#           type: docker
-#           target: mongo-express:1.0.0-alpha
-#           format: attest
-#           scribe-enable: true
-#           verbose: 2
-#           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
-#           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-#           product-key: "00Sprint_28_verify_withVerbose1"
+      - uses: scribe-security/action-verify@master
+        with:
+          type: docker
+          target: mongo-express:1.0.0-alpha
+          format: attest
+          scribe-enable: true
+          verbose: 2
+          scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
+          scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
+          product-key: "00_tes_verify"
 
 
       - uses: actions/upload-artifact@v2
@@ -63,7 +63,7 @@ jobs:
         with:
           target: mongo-express:1.0.0-alpha
           format: statement-slsa
-          product-key: "00Sprint_23_attest"
+          product-key: "00_tes_verify"
 
       - uses: actions/upload-artifact@v2
         with:
