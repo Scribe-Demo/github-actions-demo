@@ -28,7 +28,7 @@ jobs:
         uses: scribe-security/action-bom@master
         with:
           type: docker
-          target: mongo-express:1.0.0-alpha
+          target: requarks/wiki:2.5.219
           format: attest-cyclonedx-json	
           verbose: 2
           scribe-enable: true
@@ -41,7 +41,7 @@ jobs:
       - uses: scribe-security/action-verify@master
         with:
           type: docker
-          target: mongo-express:1.0.0-alpha
+          target: requarks/wiki:2.5.219
           format: attest
           scribe-enable: true
           verbose: 2
@@ -61,7 +61,7 @@ jobs:
         id: valint_slsa_statement
         uses: scribe-security/action-bom@master
         with:
-          target: mongo-express:1.0.0-alpha
+          target: requarks/wiki:2.5.219
           format: statement-slsa
           product-key: "00_retest_verify"
 
