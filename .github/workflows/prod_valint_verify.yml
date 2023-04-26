@@ -34,7 +34,7 @@ jobs:
           scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "00_retest_verify3"
+          product-key: "00_retest_verify4"
 
 
 # #         new code  
@@ -47,7 +47,7 @@ jobs:
           verbose: 2
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "00_retest_verify3"
+          product-key: "00_retest_verify4"
 
 
       - uses: actions/upload-artifact@v2
@@ -62,20 +62,20 @@ jobs:
         uses: scribe-security/action-bom@dev
         with:
           target: requarks/wiki:2.5.219
-          format: attest-slsa
-          product-key: "00_retest_verify3"
+          format: statement-slsa
+          product-key: "00_retest_verify4"
          
          
 #          new raw
       - uses: scribe-security/action-verify@dev
         with:
           target: requarks/wiki:2.5.219
-          format: attest-slsa
+          format: statement-slsa
           scribe-enable: true
           verbose: 2
-          scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
-          scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "00_retest_verify3"
+#           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
+#           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
+          product-key: "00_retest_verify4"
 
       - uses: actions/upload-artifact@v2
         with:
