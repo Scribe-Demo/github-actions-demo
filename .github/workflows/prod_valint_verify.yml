@@ -29,12 +29,12 @@ jobs:
         with:
           type: docker
           target: requarks/wiki:2.5.219
-          format: attest
+#           format: attest
           verbose: 2
           scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "00_retest_verify4"
+          product-key: "00_retest_verify5"
 
 
 # #         new code  
@@ -42,12 +42,12 @@ jobs:
         with:
           type: docker
           target: requarks/wiki:2.5.219
-          format: attest
+          format: statement-cyclonedx-json
           scribe-enable: true
           verbose: 2
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "00_retest_verify4"
+          product-key: "00_retest_verify5"
 
 
       - uses: actions/upload-artifact@v2
@@ -63,19 +63,19 @@ jobs:
         with:
           target: requarks/wiki:2.5.219
           format: statement-slsa
-          product-key: "00_retest_verify4"
+          product-key: "00_retest_verify5"
          
          
-#          new raw
-      - uses: scribe-security/action-verify@dev
-        with:
-          target: requarks/wiki:2.5.219
-          format: statement-slsa
-          scribe-enable: true
-          verbose: 2
-#           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
-#           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "00_retest_verify4"
+# #          new raw
+#       - uses: scribe-security/action-verify@dev
+#         with:
+#           target: requarks/wiki:2.5.219
+#           format: statement-slsa
+#           scribe-enable: true
+#           verbose: 2
+# #           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
+# #           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
+#           product-key: "00_retest_verify4"
 
       - uses: actions/upload-artifact@v2
         with:
