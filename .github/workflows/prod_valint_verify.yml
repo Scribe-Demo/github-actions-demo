@@ -25,7 +25,7 @@ jobs:
           
       - name: Image generate bom, upload to scribe
         id: valint_bom_image
-        uses: scribe-security/action-bom@master
+        uses: scribe-security/action-bom@dev
         with:
           type: docker
           target: requarks/wiki:2.5.219
@@ -34,20 +34,20 @@ jobs:
           scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "00_retest_verify"
+          product-key: "00_retest_verify2"
 
 
 # #         new code  
-      - uses: scribe-security/action-verify@master
+      - uses: scribe-security/action-verify@dev
         with:
           type: docker
           target: requarks/wiki:2.5.219
-          format: attest
+          format: attest-cyclonedx-json	
           scribe-enable: true
           verbose: 2
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "00_retest_verify"
+          product-key: "00_retest_verify2"
 
 
       - uses: actions/upload-artifact@v2
@@ -59,11 +59,11 @@ jobs:
             
       - name: Generate SLSA provenance statement
         id: valint_slsa_statement
-        uses: scribe-security/action-bom@master
+        uses: scribe-security/action-bom@dev
         with:
           target: requarks/wiki:2.5.219
           format: statement-slsa
-          product-key: "00_retest_verify"
+          product-key: "00_retest_verify2"
 
       - uses: actions/upload-artifact@v2
         with:
