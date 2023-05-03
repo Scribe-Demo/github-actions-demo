@@ -34,7 +34,7 @@ jobs:
           scribe-enable: true
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "SH-1669 fix"
+          product-key: "SH-1669_fix2"
 
 
 # #         new code  
@@ -47,7 +47,7 @@ jobs:
           verbose: 2
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "SH-1669 fix"
+          product-key: "SH-1669_fix2"
 
       - uses: actions/upload-artifact@v2
         with:
@@ -62,7 +62,7 @@ jobs:
         with:
           target: circleci/node:erbium-bullseye-browsers-legacy
           format: statement-slsa
-          product-key: "SH-1669 fix"
+          product-key: "SH-1669_fix2"
 
       - uses: actions/upload-artifact@v2
         with:
