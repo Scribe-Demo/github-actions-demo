@@ -1,4 +1,4 @@
-name: stg_valint_docker_image
+name: stg_old_valint_docker_image
 on: 
 #     push:
     workflow_dispatch:
