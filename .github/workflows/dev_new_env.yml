@@ -48,7 +48,8 @@ jobs:
 
       - name: Image generate bom, upload to scribe
         id: valint_bom_image
-        uses: scribe-security/action-bom@master
+#         uses: scribe-security/action-bom@master
+        uses: scribe-security/action-bom@dev
         with:
           type: docker # To be included only if you want to to use docker daemon to access the image (for example, creating your docker image locally)
           target: mongo-express:latest
@@ -75,7 +76,8 @@ jobs:
 
       - name: Generate SLSA provenance statement
         id: valint_slsa_statement
-        uses: scribe-security/action-bom@master
+#         uses: scribe-security/action-bom@master
+        uses: scribe-security/action-bom@dev
         with:
           target: mongo-express:latest
           format: statement-slsa
