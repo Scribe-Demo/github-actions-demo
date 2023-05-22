@@ -71,9 +71,9 @@ jobs:
             ${{ steps.valint_bom_scm.outputs.OUTPUT_PATH }}
             ${{ steps.valint_bom_image.outputs.OUTPUT_PATH }}
       
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+#       - uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0
 
       - name: Generate SLSA provenance statement
         id: valint_slsa_statement
