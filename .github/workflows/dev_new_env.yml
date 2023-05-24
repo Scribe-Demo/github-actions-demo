@@ -50,9 +50,9 @@ jobs:
         uses: scribe-security/action-bom@dev
         with:
           type: docker # To be included only if you want to to use docker daemon to access the image (for example, creating your docker image locally)
-          target: mongo-express:latest
-          product-version: "attest-cyclonedx-json_verify"
-          pipeline-name: "pipeline_attest-cyclonedx-json_verify"
+          target: mongo-express:1.0.0-alpha.4
+          product-version: "attest-cyclonedx-json_withoutverify"
+          pipeline-name: "pipeline_attest-cyclonedx-json_withoutverify"
           format: attest-cyclonedx-json
           scribe-enable: true
           product-key: "000_verify_format attest2"
@@ -63,17 +63,17 @@ jobs:
           scribe-audience: ${{ env.SCRIBE_AUDIENCE }}
           
           
-#          new code  - verify
-      - uses: scribe-security/action-verify@master
-        with:
-          type: docker
-          target: mongo-express:latest
-          format: attest-cyclonedx-json
-          scribe-enable: true
-          verbose: 2
-          scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
-          scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "000_verify_format attest2" 
+# #          new code  - verify
+#       - uses: scribe-security/action-verify@master
+#         with:
+#           type: docker
+#           target: mongo-express:latest
+#           format: attest-cyclonedx-json
+#           scribe-enable: true
+#           verbose: 2
+#           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
+#           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
+#           product-key: "000_verify_format attest2" 
 
       - uses: actions/upload-artifact@v2
         with:
@@ -88,7 +88,7 @@ jobs:
 #         uses: scribe-security/action-bom@master
         uses: scribe-security/action-bom@dev
         with:
-          target: mongo-express:latest
+          target: mongo-express:1.0.0-alpha.4
           format: statement-slsa
           product-key: "000_verify_format attest2"
 
