@@ -51,11 +51,11 @@ jobs:
         with:
           type: docker # To be included only if you want to to use docker daemon to access the image (for example, creating your docker image locally)
           target: mongo-express:0.54
-          product-version: "version 3"
-          pipeline-name: "pipline name 3"
+          product-version: "version 1- statement-cyclonedx-json"
+          pipeline-name: "pipline name 1 - statement-cyclonedx-json"
           format: statement-cyclonedx-json
           scribe-enable: true
-          product-key: "000_verify_format attest"
+          product-key: "000_verify_format attest2"
           scribe-client-id: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_SECRET }}
           scribe-url: ${{ env.SCRIBE_URL }}
@@ -63,17 +63,17 @@ jobs:
           scribe-audience: ${{ env.SCRIBE_AUDIENCE }}
           
           
-# #          new code  - verify
-#       - uses: scribe-security/action-verify@master
-#         with:
-#           type: docker
-#           target: mongo-express:0.49
-#           format: statement-cyclonedx-json
-#           scribe-enable: true
-#           verbose: 2
-#           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
-#           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-#           product-key: "SH-1669_fix2"   
+#          new code  - verify
+      - uses: scribe-security/action-verify@master
+        with:
+          type: docker
+          target: mongo-express:0.49
+          format: statement-cyclonedx-json
+          scribe-enable: true
+          verbose: 2
+          scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
+          scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
+          product-key: "000_verify_format attest2" 
 
       - uses: actions/upload-artifact@v2
         with:
@@ -90,7 +90,7 @@ jobs:
         with:
           target: mongo-express:0.54
           format: statement-slsa
-          product-key: "000_verify_format attest"
+          product-key: "000_verify_format attest2"
 
       - uses: actions/upload-artifact@v2
         with:
