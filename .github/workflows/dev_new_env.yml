@@ -53,7 +53,7 @@ jobs:
           target: mongo-express:0.54
           product-version: "version 1- statement-cyclonedx-json"
           pipeline-name: "pipline name 1 - statement-cyclonedx-json"
-          format: statement-cyclonedx-json
+#           format: statement-cyclonedx-json
           scribe-enable: true
           product-key: "000_verify_format attest2"
           scribe-client-id: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_ID }}
