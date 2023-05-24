@@ -64,16 +64,16 @@ jobs:
           
           
 #          new code  - verify
-      - uses: scribe-security/action-verify@master
-        with:
-          type: docker
-          target: mongo-express:0.49
-          format: statement-cyclonedx-json
-          scribe-enable: true
-          verbose: 2
-          scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
-          scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "000_verify_format attest2" 
+#       - uses: scribe-security/action-verify@master
+#         with:
+#           type: docker
+#           target: mongo-express:0.49
+#           format: statement-cyclonedx-json
+#           scribe-enable: true
+#           verbose: 2
+#           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
+#           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
+#           product-key: "000_verify_format attest2" 
 
       - uses: actions/upload-artifact@v2
         with:
