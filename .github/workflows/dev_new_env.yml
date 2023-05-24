@@ -50,10 +50,10 @@ jobs:
         uses: scribe-security/action-bom@dev
         with:
           type: docker # To be included only if you want to to use docker daemon to access the image (for example, creating your docker image locally)
-          target: mongo-express:1.0.0-alpha.4
-          product-version: "attest-cyclonedx-json_withoutverify"
-          pipeline-name: "pipeline_attest-cyclonedx-json_withoutverify"
-          format: attest-cyclonedx-json
+          target: mongo-express:0.54.0
+          product-version: "withoutFormatVerify"
+          pipeline-name: "pipeline_withoutFormat"
+#           format: attest-cyclonedx-json
           scribe-enable: true
           product-key: "000_verify_format attest2"
           scribe-client-id: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_ID }}
@@ -88,7 +88,7 @@ jobs:
 #         uses: scribe-security/action-bom@master
         uses: scribe-security/action-bom@dev
         with:
-          target: mongo-express:1.0.0-alpha.4
+          target: mongo-express:0.54.0
           format: statement-slsa
           product-key: "000_verify_format attest2"
 
