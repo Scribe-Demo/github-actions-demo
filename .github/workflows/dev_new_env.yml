@@ -52,8 +52,8 @@ jobs:
           type: docker # To be included only if you want to to use docker daemon to access the image (for example, creating your docker image locally)
           target: mongo-express:0.54
           product-version: "version 1- statement-cyclonedx-json"
-          pipeline-name: "pipline name 1 - statement-cyclonedx-json"
-#           format: statement-cyclonedx-json
+          pipeline-name: "statement-cyclonedx-json without verify"
+          format: statement-cyclonedx-json
           scribe-enable: true
           product-key: "000_verify_format attest2"
           scribe-client-id: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_ID }}
