@@ -1,5 +1,3 @@
-
-
 name: dev_new_env_build
 
 on: 
@@ -95,7 +93,7 @@ jobs:
         with:
           target: mongo-express:0.45
           format: statement-slsa
-         product-key: "000_verify_format attest"
+          product-key: "000_verify_format attest"
 
       - uses: actions/upload-artifact@v2
         with:
