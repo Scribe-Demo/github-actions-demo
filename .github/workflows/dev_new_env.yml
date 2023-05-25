@@ -50,7 +50,7 @@ jobs:
         uses: scribe-security/action-bom@dev
         with:
           type: docker # To be included only if you want to to use docker daemon to access the image (for example, creating your docker image locally)
-          target: rmongo-express:latest
+          target: mongo-express:latest
           product-version: "mongo-express:latest_verify"
           pipeline-name: "pipeline2"
           format: attest-cyclonedx-json
