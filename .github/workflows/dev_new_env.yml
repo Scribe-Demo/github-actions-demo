@@ -51,7 +51,7 @@ jobs:
         with:
           type: docker # To be included only if you want to to use docker daemon to access the image (for example, creating your docker image locally)
           target: mongo-express:0.40
-          product-version: "111_mongo-express:0.38"
+          product-version: "111_mongo-express:0.40"
           pipeline-name: "pipeline3"
           format: statement-cyclonedx-json
           scribe-enable: true
