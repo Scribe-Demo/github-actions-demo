@@ -22,25 +22,25 @@ jobs:
         with:
           fetch-depth: 0
 
-#       - uses: actions/checkout@v3
-#         with:
-#           repository: mongo-express/mongo-express
-#           ref: refs/tags/v1.0.0-alpha.4
-#           path: mongo-express-scm
+      - uses: actions/checkout@v3
+        with:
+          repository: mongo-express/mongo-express
+          ref: refs/tags/v1.0.0-alpha.4
+          path: mongo-express-scm
 
-#       - name: Scm generate bom, upload to scribe
-#         id: valint_bom_scm
-#         uses: scribe-security/action-bom@master
-#         with:
-#            type: dir
-#            target: 'mongo-express-scm'
-#            scribe-enable: true
-#            product-key: "000_verify_format attest"
-#            scribe-client-id: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_ID }}
-#            scribe-client-secret: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_SECRET }}
-#            scribe-url: ${{ env.SCRIBE_URL }}
-#            scribe-login-url: ${{ env.SCRIBE_LOGIN_URL }}
-#            scribe-audience: ${{ env.SCRIBE_AUDIENCE }}
+      - name: Scm generate bom, upload to scribe
+        id: valint_bom_scm
+        uses: scribe-security/action-bom@master
+        with:
+           type: dir
+           target: 'mongo-express-scm'
+           scribe-enable: true
+           product-key: "000_25-05-23_with_dir"
+           scribe-client-id: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_ID }}
+           scribe-client-secret: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_SECRET }}
+           scribe-url: ${{ env.SCRIBE_URL }}
+           scribe-login-url: ${{ env.SCRIBE_LOGIN_URL }}
+           scribe-audience: ${{ env.SCRIBE_AUDIENCE }}
 
       # Build and push your image - this example skips this step as we're using the published mongo express.
 
@@ -55,7 +55,7 @@ jobs:
           pipeline-name: "pipeline2"
           format: attest-cyclonedx-json
           scribe-enable: true
-          product-key: "000_25-05-23"
+          product-key: "000_25-05-23_with_dir"
           scribe-client-id: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_SECRET }}
           scribe-url: ${{ env.SCRIBE_URL }}
@@ -73,7 +73,7 @@ jobs:
           verbose: 2
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "000_25-05-23" 
+          product-key: "000_25-05-23_with_dir" 
 
       - uses: actions/upload-artifact@v2
         with:
@@ -90,7 +90,7 @@ jobs:
         with:
           target: mongo-express:latest
           format: statement-slsa
-          product-key: "000_25-05-23"
+          product-key: "000_25-05-23_with_dir"
 
       - uses: actions/upload-artifact@v2
         with:
