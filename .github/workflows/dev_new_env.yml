@@ -55,7 +55,7 @@ jobs:
           pipeline-name: "pipeline 5"
           format: attest-cyclonedx-json
           scribe-enable: true
-          product-key: "000_29-05-23_mongo"
+          product-key: "000_29-05-23_mongo1"
           scribe-client-id: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_SECRET }}
           scribe-url: ${{ env.SCRIBE_URL }}
@@ -68,12 +68,12 @@ jobs:
         with:
           type: docker
           target: mongo-express:0.40.0
-          format: attest
+          format: attest-cyclonedx-json
           scribe-enable: true
           verbose: 2
           scribe-client-id: ${{ secrets.SCRIBE_PROD_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_PROD_CLIENT_SECRET }}
-          product-key: "000_25-05-23_with_dir" 
+          product-key: "000_25-05-23_with_dir1" 
 
       - uses: actions/upload-artifact@v2
         with:
@@ -90,7 +90,7 @@ jobs:
         with:
           target: mongo-express:0.40.0
           format: attest-slsa
-          product-key: "000_29-05-23_mongo"
+          product-key: "000_29-05-23_mongo1"
 
       - uses: actions/upload-artifact@v2
         with:
