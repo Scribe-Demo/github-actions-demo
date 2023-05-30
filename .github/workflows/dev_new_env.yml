@@ -51,7 +51,7 @@ jobs:
         with:
           type: docker # To be included only if you want to to use docker daemon to access the image (for example, creating your docker image locally)
           target: mongo-express:latest
-          product-version: "version_with_attest_attest-slsa_verify"
+          product-version: "30_May_23_Github_pipeline"
           pipeline-name: "pipeline 5"
           format: attest
           scribe-enable: true
@@ -90,7 +90,7 @@ jobs:
         with:
           target: mongo-express:latest
           format: attest-slsa
-          product-key: "30_May_23_mongo1"
+          product-key: "30_May_23_Github_pipeline"
 
       - uses: actions/upload-artifact@v2
         with:
