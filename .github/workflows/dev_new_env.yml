@@ -53,7 +53,7 @@ jobs:
           target: mongo-express:latest
           product-version: "30_May_23_Github_pipeline"
           pipeline-name: "pipeline 5"
-          format: attest
+#           format: attest
           scribe-enable: true
           product-key: "30_May_23_mongo1"
           scribe-client-id: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_ID }}
