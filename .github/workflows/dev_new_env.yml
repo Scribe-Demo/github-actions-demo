@@ -55,7 +55,7 @@ jobs:
           pipeline-name: "pipeline 5"
           format: attest
           scribe-enable: true
-          product-key: "000_29-05-23_mongo1"
+          product-key: "30_May_23_mongo1"
           scribe-client-id: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_SECRET }}
           scribe-url: ${{ env.SCRIBE_URL }}
@@ -90,7 +90,7 @@ jobs:
         with:
           target: mongo-express:latest
           format: attest-slsa
-          product-key: "000_29-05-23_mongo1"
+          product-key: "30_May_23_mongo1"
 
       - uses: actions/upload-artifact@v2
         with:
