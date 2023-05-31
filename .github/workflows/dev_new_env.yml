@@ -51,11 +51,11 @@ jobs:
         with:
           type: docker # To be included only if you want to to use docker daemon to access the image (for example, creating your docker image locally)
           target: mongo-express:0.49.0
-          product-version: "31_May_23_attest"
+          product-version: "attest_mongo-express:0.49.0"
           pipeline-name: "pipeline2"
           format: attest
           scribe-enable: true
-          product-key: "31_May_23_statment_docker"
+          product-key: "31_May_23_2"
           scribe-client-id: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_SECRET }}
           scribe-url: ${{ env.SCRIBE_URL }}
@@ -90,7 +90,7 @@ jobs:
         with:
           target: mongo-express:0.49.0
           format: attest-slsa
-          product-key: "31_May_23_statment_docker"
+          product-key: "31_May_23_2"
 
       - uses: actions/upload-artifact@v2
         with:
