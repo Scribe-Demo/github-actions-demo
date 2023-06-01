@@ -53,7 +53,7 @@ jobs:
           target: requarks/wiki:2.5.219
           product-version: "attest_wiki:2.5.219"
           pipeline-name: "1"
-          format: attest
+#           format: attest
           scribe-enable: true
           product-key: "1st_may_2023"
           scribe-client-id: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_ID }}
@@ -89,7 +89,7 @@ jobs:
         uses: scribe-security/action-bom@dev
         with:
           target: requarks/wiki:2.5.219
-          format: attest-slsa
+          format: statement-slsa
           product-key: "1st_may_2023"
 
       - uses: actions/upload-artifact@v2
