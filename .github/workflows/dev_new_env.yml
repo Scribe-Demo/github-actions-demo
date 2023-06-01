@@ -51,11 +51,11 @@ jobs:
         with:
           type: docker # To be included only if you want to to use docker daemon to access the image (for example, creating your docker image locally)
           target: requarks/wiki:2.5.219
-          product-version: "cyclonedx-json_requarks/wiki:2.5.219"
-          pipeline-name: "pipeline6"
-          format: cyclonedx-json
+          product-version: "attest_wiki:2.5.219"
+          pipeline-name: "1"
+          format: attest
           scribe-enable: true
-          product-key: "31_May_23_2"
+          product-key: "1st_may_2023"
           scribe-client-id: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_ID }}
           scribe-client-secret: ${{ secrets.SCRIBE_DEV_NEW_M2M_CLIENT_SECRET }}
           scribe-url: ${{ env.SCRIBE_URL }}
@@ -90,7 +90,7 @@ jobs:
         with:
           target: requarks/wiki:2.5.219
           format: attest-slsa
-          product-key: "31_May_23_2"
+          product-key: "1st_may_2023"
 
       - uses: actions/upload-artifact@v2
         with:
